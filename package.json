@@ -1,0 +1,14 @@
+{
+  "name": "@4ire-labs/blot.js",
+  "version": "1.0.0-beta.0",
+  "description": "JS SDK for Polkadot Protocol",
+  "main": "index.js",
+  "repository": "git@github.com:4IRE-Labs/blot.js.git",
+  "license": "UNLICENSED",
+  "scripts": {
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

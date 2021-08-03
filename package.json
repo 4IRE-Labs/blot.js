@@ -1,14 +1,75 @@
 {
   "name": "@4ire-labs/blot.js",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "JS SDK for Polkadot Protocol",
-  "main": "index.js",
   "repository": "git@github.com:4IRE-Labs/blot.js.git",
   "license": "UNLICENSED",
-  "scripts": {
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "browser": "dist/browser.js",
+  "module": "dist/browser.js",
+  "bin": {
+    "blot": "dist/cli.js"
   },
-  "dependencies": {
+  "scripts": {
+    "cli": "ts-node src/cli.ts",
+    "qa": "yarn lint && yarn test",
+    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+    "coveralls": "coveralls < coverage/lcov.info",
+    "test-coverage": "jest --detectOpenHandles --coverage",
+    "test": "jest",
+    "clean": "rm -rf dist site",
+    "ts-node": "ts-node",
+    "release": "yarn version --prerelease",
+    "package-publish": "yarn qa && yarn build && cd dist && npm publish --access public",
+    "package-build": "mkdir -p dist && json-mask 'name,version,license,description,repository,main,types,browser,module,dependencies,keywords' package.json | sed 's/dist\\///g' > dist/package.json && cp readme.md dist/readme.md",
+    "build": "yarn clean && yarn build-docs && yarn package-build && yarn build-ts && yarn esbuild-node && yarn esbuild-browser",
+    "build-docs": "typedoc --entryPoints src/main.ts --out site",
+    "build-ts": "tsc -p tsconfig.json",
+    "esbuild-browser": "esbuild src/browser.ts --bundle --minify --sourcemap=external --outfile=dist/browser.js",
+    "esbuild-browser:dev": "esbuild src/browser.ts --bundle --outfile=dist/browser.js",
+    "esbuild-browser:watch": "esbuild src/browser.ts --bundle --watch --outfile=dist/browser.js",
+    "esbuild-node": "esbuild src/cli.ts --bundle --platform=node --minify --sourcemap=external --outfile=dist/cli.js",
+    "esbuild-node:dev": "esbuild src/cli.ts --bundle --sourcemap=external --outfile=dist/cli.js",
+    "esbuild-node:watch": "esbuild src/cli.ts --bundle --watch --sourcemap=external --outfile=dist/cli.js"
+  },
+  "dependencies": {},
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ]
   },
   "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.10",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "coveralls": "^3.1.1",
+    "esbuild": "^0.12.17",
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6",
+    "json-mask": "^1.0.4",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typedoc": "^0.21.5",
+    "typescript": "^4.3.5"
   }
 }

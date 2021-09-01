@@ -1,10 +1,8 @@
-export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
+import Contract from './contract'
+import Account from './account'
+import NetworkProvider from './provider'
+import Blot from './blot'
 
-export const greet = (name: string): string => `Hello ${name}`
+import dotContract from './dotContract'
 
-export const foo = async (): Promise<boolean> => {
-  console.log(greet('World'))
-  await delayMillis(1000)
-  console.log('done')
-  return true
-}
+export { Blot, NetworkProvider, Account, Contract, dotContract }

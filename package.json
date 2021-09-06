@@ -12,6 +12,7 @@
     "blot": "dist/cli.js"
   },
   "scripts": {
+    "prepare" : "yarn build-ts",
     "cli": "ts-node src/cli.ts",
     "qa": "yarn lint && yarn test",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",

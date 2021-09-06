@@ -11,6 +11,9 @@
   "bin": {
     "blot": "dist/cli.js"
   },
+  "files":[
+    "dist/**"
+  ],
   "scripts": {
     "prepare" : "yarn build-ts",
     "cli": "ts-node src/cli.ts",

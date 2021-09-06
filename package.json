@@ -34,7 +34,26 @@
     "esbuild-node:dev": "esbuild src/cli.ts --bundle --sourcemap=external --outfile=dist/cli.js",
     "esbuild-node:watch": "esbuild src/cli.ts --bundle --watch --sourcemap=external --outfile=dist/cli.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@polkadot/api": "^4.15.1",
+    "@polkadot/api-contract": "^4.15.1",
+    "@polkadot/extension-dapp": "^0.38.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^16.4.10",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "coveralls": "^3.1.1",
+    "esbuild": "^0.12.17",
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6",
+    "json-mask": "^1.0.4",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0",
+    "typedoc": "^0.21.5",
+    "typescript": "^4.3.5"
+  },
   "eslintConfig": {
     "root": true,
     "parser": "@typescript-eslint/parser",
@@ -57,20 +76,5 @@
       "**/__tests__/**/*.+(ts|tsx|js)",
       "**/?(*.)+(spec|test).+(ts|tsx|js)"
     ]
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.24",
-    "@types/node": "^16.4.10",
-    "@typescript-eslint/eslint-plugin": "^4.29.0",
-    "@typescript-eslint/parser": "^4.29.0",
-    "coveralls": "^3.1.1",
-    "esbuild": "^0.12.17",
-    "eslint": "^7.32.0",
-    "jest": "^27.0.6",
-    "json-mask": "^1.0.4",
-    "ts-jest": "^27.0.4",
-    "ts-node": "^10.1.0",
-    "typedoc": "^0.21.5",
-    "typescript": "^4.3.5"
   }
 }

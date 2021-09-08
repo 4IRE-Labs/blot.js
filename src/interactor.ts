@@ -1,7 +1,6 @@
 import { ISubmittableResult } from '@polkadot/types/types'
 import { Balance } from '@polkadot/types/interfaces'
-import Account from './account'
-import Contract from './contract'
+import { Account } from './account'
 import NetworkProvider from './provider'
 
 export default class Interactor {
@@ -28,9 +27,5 @@ export default class Interactor {
 
   getAddress (): string {
     return this.account.getAddress()
-  }
-
-  newContract (dotContract: { source: { wasm: string; }}): Contract {
-    return new Contract(this.provider, this.account, dotContract)
   }
 }

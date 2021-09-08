@@ -7,9 +7,9 @@ import {
   InjectedAccountWithMeta
 } from '@polkadot/extension-inject/types'
 
-import Account from './account'
 import Interactor from './interactor'
 import NetworkProvider from './provider'
+import InjectedAccount from './account/injectedAccount'
 
 export default class Blot {
   extensions: InjectedExtension[]
@@ -40,7 +40,7 @@ export default class Blot {
 
   async getInteractor (accountIndex: number): Promise<Interactor> {
     const accounts = await web3Accounts()
-    const account = new Account(accounts[accountIndex])
+    const account = await InjectedAccount.create(accounts[accountIndex])
 
     return new Interactor(this.provider, account)
   }

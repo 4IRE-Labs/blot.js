@@ -1,0 +1,148 @@
+{
+  "metadataVersion": "0.1.0",
+  "source": {
+    "hash": "0x75724c92238a4eac5a1529f679ddc05e1b75c1372f08aea8edf2e91311cad9da",
+    "language": "ink! 3.0.0-rc4",
+    "compiler": "rustc 1.56.0-nightly"
+  },
+  "contract": {
+    "name": "counter",
+    "version": "0.1.0",
+    "authors": [
+      "[your_name] <[your_email]>"
+    ]
+  },
+  "spec": {
+    "constructors": [
+      {
+        "args": [
+          {
+            "name": "init_value",
+            "type": {
+              "displayName": [
+                "i32"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          "Constructor that initializes the value to the given `init_value`."
+        ],
+        "name": [
+          "new"
+        ],
+        "selector": "0x9bae9d5e"
+      },
+      {
+        "args": [],
+        "docs": [
+          "Constructor that initializes the value to 0(the default for i32).",
+          "",
+          "Constructors can delegate to other constructors."
+        ],
+        "name": [
+          "default"
+        ],
+        "selector": "0xed4b9d1b"
+      }
+    ],
+    "docs": [],
+    "events": [],
+    "messages": [
+      {
+        "args": [],
+        "docs": [
+          " A message that can be called on instantiated contracts.",
+          " This one increments the stored value by one.",
+          " Saturating addition is used to prevent overflow."
+        ],
+        "mutates": true,
+        "name": [
+          "increment"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x12bd51d3"
+      },
+      {
+        "args": [],
+        "docs": [
+          " Decrements the stored value by one.",
+          " Saturating substraction is used to prevent underflow."
+        ],
+        "mutates": true,
+        "name": [
+          "decrement"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x4151ffe0"
+      },
+      {
+        "args": [
+          {
+            "name": "by",
+            "type": {
+              "displayName": [
+                "i32"
+              ],
+              "type": 1
+            }
+          }
+        ],
+        "docs": [
+          " Modifies stored value by a provided to a call.",
+          " Saturating addition is used to prevent overflow and underflow."
+        ],
+        "mutates": true,
+        "name": [
+          "modify_by"
+        ],
+        "payable": false,
+        "returnType": null,
+        "selector": "0x34f15bc2"
+      },
+      {
+        "args": [],
+        "docs": [
+          " Simply returns the current value in the storage."
+        ],
+        "mutates": false,
+        "name": [
+          "get"
+        ],
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "i32"
+          ],
+          "type": 1
+        },
+        "selector": "0x2f865bd9"
+      }
+    ]
+  },
+  "storage": {
+    "struct": {
+      "fields": [
+        {
+          "layout": {
+            "cell": {
+              "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "ty": 1
+            }
+          },
+          "name": "value"
+        }
+      ]
+    }
+  },
+  "types": [
+    {
+      "def": {
+        "primitive": "i32"
+      }
+    }
+  ]
+}

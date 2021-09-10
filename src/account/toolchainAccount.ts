@@ -1,24 +1,29 @@
-import type { Signer } from '@polkadot/api/types'
-import type { KeyringPair } from '@polkadot/keyring/types';
-import type { Registry, SignerPayloadJSON, SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
-import { assert, hexToU8a, u8aToHex } from '@polkadot/util';
-import { Account } from '.'
+import type { Signer } from "@polkadot/api/types";
+import type { KeyringPair } from "@polkadot/keyring/types";
+import type {
+  Registry,
+  SignerPayloadJSON,
+  SignerPayloadRaw,
+  SignerResult,
+} from "@polkadot/types/types";
+import { assert, hexToU8a, u8aToHex } from "@polkadot/util";
+import { Account } from ".";
 
 export default class ToolchainAccount implements Account {
-  address: string
-  signer: Signer
+  address: string;
+  signer: Signer;
 
   constructor(registry: Registry, keyringPair: KeyringPair) {
-    this.address = keyringPair.address
-    this.signer = new SingleAccountSigner(registry, keyringPair)
+    this.address = keyringPair.address;
+    this.signer = new SingleAccountSigner(registry, keyringPair);
   }
 
   getAddress(): string {
-    return this.address
+    return this.address;
   }
 
   getSigner(): Signer {
-    return this.signer
+    return this.signer;
   }
 }
 
@@ -36,22 +41,33 @@ class SingleAccountSigner implements Signer {
   }
 
   public async signPayload(payload: SignerPayloadJSON): Promise<SignerResult> {
-    assert(payload.address === this.keyringPair.address, 'Signer does not have the keyringPair');
+    assert(
+      payload.address === this.keyringPair.address,
+      "Signer does not have the keyringPair"
+    );
 
     return new Promise((resolve): void => {
       setTimeout((): void => {
-        const signed = this.registry.createType('ExtrinsicPayload', payload, { version: payload.version }).sign(this.keyringPair);
+        const signed = this.registry
+          .createType("ExtrinsicPayload", payload, { version: payload.version })
+          .sign(this.keyringPair);
 
         resolve({
           id: ++id,
-          ...signed
+          ...signed,
         });
       }, this.signDelay);
     });
   }
 
-  public async signRaw({ address, data }: SignerPayloadRaw): Promise<SignerResult> {
-    assert(address === this.keyringPair.address, 'Signer does not have the keyringPair');
+  public async signRaw({
+    address,
+    data,
+  }: SignerPayloadRaw): Promise<SignerResult> {
+    assert(
+      address === this.keyringPair.address,
+      "Signer does not have the keyringPair"
+    );
 
     return new Promise((resolve): void => {
       setTimeout((): void => {
@@ -59,7 +75,7 @@ class SingleAccountSigner implements Signer {
 
         resolve({
           id: ++id,
-          signature
+          signature,
         });
       }, this.signDelay);
     });

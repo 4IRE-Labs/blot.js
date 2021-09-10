@@ -1,46 +1,43 @@
-import { web3Enable, web3Accounts } from "@polkadot/extension-dapp";
-import {
-  InjectedExtension,
-  InjectedAccountWithMeta,
-} from "@polkadot/extension-inject/types";
+import { AnyJson } from "@polkadot/types/types";
 
 import Interactor from "./interactor";
 import NetworkProvider from "./provider";
-import InjectedAccount from "./account/injectedAccount";
+import { ApiPromise, WsProvider } from "@polkadot/api";
+import ContractFactory from "./contractFactory";
+import { Account } from "./account";
 
 export default class Blot {
-  extensions: InjectedExtension[];
   provider: NetworkProvider;
+  account: Account | undefined;
 
   constructor(provider: NetworkProvider) {
-    this.extensions = [];
     this.provider = provider;
   }
 
-  async enable(dappName: string): Promise<void> {
-    const beforeEnableTime = Date.now();
-    this.extensions = await web3Enable(dappName);
-    const afterEnableTime = Date.now();
+  static async constructProvider(url: string) {
+    const innerProvider = new WsProvider(url);
+    const api = await ApiPromise.create({ provider: innerProvider });
+    return new NetworkProvider(innerProvider, api);
+  }
 
-    if (this.extensions.length === 0) {
-      // TRICK: refactoring web3Enable to handle errors correctly is needed
-      if (afterEnableTime - beforeEnableTime >= 1000) {
-        throw new Error("request rejected by user");
-      }
-      throw new Error(
-        "no extension installed or this page is not allowed to interact with installed extension"
-      );
+  async getInteractor(): Promise<Interactor> {
+    this.assertAccount();
+    return new Interactor(this.provider, this.account as Account);
+  }
+
+  getContractFactory(abi: AnyJson, wasm: string | Buffer) {
+    this.assertAccount();
+    return new ContractFactory(
+      this.provider,
+      this.account as Account,
+      abi,
+      wasm
+    );
+  }
+
+  assertAccount() {
+    if (!this.account) {
+      throw Error("Account is not initialized");
     }
-  }
-
-  async getAccounts(): Promise<InjectedAccountWithMeta[]> {
-    return web3Accounts();
-  }
-
-  async getInteractor(accountIndex: number): Promise<Interactor> {
-    const accounts = await web3Accounts();
-    const account = await InjectedAccount.create(accounts[accountIndex]);
-
-    return new Interactor(this.provider, account);
   }
 }

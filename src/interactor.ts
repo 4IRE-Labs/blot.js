@@ -15,7 +15,7 @@ export default class Interactor {
   async transfer (recipientAddress: string, value: number, callback: ((result: ISubmittableResult) => void)): Promise<() => void> {
     const address = this.account.getAddress()
     const signer = await this.account.getSigner()
-    const api = this.provider.getApi()
+    const api = this.provider.api
     return api.tx.balances
       .transfer(recipientAddress, value)
       .signAndSend(address, { signer }, callback)

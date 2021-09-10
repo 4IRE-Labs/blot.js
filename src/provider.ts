@@ -5,22 +5,19 @@ export default class NetworkProvider {
   provider: WsProvider
   api: ApiPromise
 
-  constructor (url: string) {
-    this.provider = new WsProvider(url)
-    this.api = new ApiPromise()
+  constructor (provider: WsProvider, api: ApiPromise) {
+    this.provider = provider
+    this.api = api
   }
 
-  async connect (): Promise<this> {
-    this.api = await ApiPromise.create({ provider: this.provider })
-    return this
+  static async create(url: string): Promise<NetworkProvider> {
+    const provider = new WsProvider(url);
+    const api = await ApiPromise.create({ provider });
+    return new NetworkProvider(provider, api)
   }
 
   async getBalance (address: string | AccountId | Uint8Array): Promise<Balance> {
     const account = await this.api.query.system.account(address)
     return account.data.free
-  }
-
-  getApi (): ApiPromise {
-    return this.api
   }
 }

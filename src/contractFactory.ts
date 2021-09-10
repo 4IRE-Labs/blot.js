@@ -16,7 +16,7 @@ export default class ContractFactory {
   constructor(provider: NetworkProvider, account: Account, abi: AnyJson, wasm: string | Buffer) {
     this.provider = provider
     this.account = account
-    const api = this.provider.getApi()
+    const api = this.provider.api
     this.abi = new Abi(abi, api.registry.getChainProperties())
     this.code = new CodePromise(api, this.abi, wasm)
   }

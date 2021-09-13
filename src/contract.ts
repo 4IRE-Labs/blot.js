@@ -1,5 +1,5 @@
 import type { CodePromise, Abi } from "@polkadot/api-contract";
-import type { Codec, CodecArg } from "@polkadot/types/types";
+import type { Codec } from "@polkadot/types/types";
 import { createTypeUnsafe } from "@polkadot/types";
 import { Account } from "./account";
 import NetworkProvider from "./provider";
@@ -48,8 +48,8 @@ export default class Contract {
 
   constructSend(
     message: AbiMessage
-  ): (...args: CodecArg[]) => Promise<string | null> {
-    return async (...args: CodecArg[]): Promise<null> => {
+  ): (...args: any[]) => Promise<string | null> {
+    return async (...args: any[]): Promise<null> => {
       const encodedParams = message.toU8a(args);
 
       // TODO rework gas estimation technique
@@ -91,8 +91,8 @@ export default class Contract {
 
   constructCall(
     message: AbiMessage
-  ): (...args: CodecArg[]) => Promise<Codec | null> {
-    return async (...args: CodecArg[]): Promise<Codec | null> => {
+  ): (...args: any[]) => Promise<Codec | null> {
+    return async (...args: any[]): Promise<Codec | null> => {
       const encodedParams = message.toU8a(args);
 
       // TODO rework gas estimation technique

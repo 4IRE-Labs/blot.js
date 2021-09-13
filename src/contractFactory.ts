@@ -1,7 +1,7 @@
 import { SubmittableResult } from "@polkadot/api";
 import type { AccountId } from "@polkadot/types/interfaces/types";
 import { CodePromise, Abi } from "@polkadot/api-contract";
-import { AnyJson, CodecArg } from "@polkadot/types/types";
+import { AnyJson } from "@polkadot/types/types";
 
 import { Account } from "./account";
 import Contract from "./contract";
@@ -27,7 +27,7 @@ export default class ContractFactory {
   }
 
   async deploy(
-    params: CodecArg[],
+    params: any[],
     { weight, value }: { weight: number; value: number }
   ): Promise<Contract> {
     const address = this.account.getAddress();
